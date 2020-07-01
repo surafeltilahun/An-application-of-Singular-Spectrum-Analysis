@@ -32,7 +32,7 @@ time = 1/top2$f#change the frequencey into period/time
 plot(dd,type="l",lwd=2,xlab="Frequency (Hz)",xlim=c(0,0.55))#plot the frequency of seasonality in series
 
 
-#Forecast on training and test dataset
+#Forecast total visitor arrival using SSA, ARIMA and State Space Model on training and test dataset, and benchmarking thier performance using MAPE and MASE
 
 fit.arima.visitors<-auto.arima(train.visitors)#fit arima
 forecast.arima.train<-forecast(fit.arima.visitors,h=36) %>% accuracy(visitors)#Forecast total visitors arrival in NZ from 2016 to 2019. h denot the forecasting horizon of interest
@@ -47,6 +47,7 @@ EST<-forecast.ets.train[,c("MAPE","MASE")]#print MAPE and MASE of ets forecast
 SSA1<-ssa(train.split,L=51)#fit ssa forecasting technique
 ssa.forecast.train<-forecast(SSA1, groups = list(1:16), method = "recurrent", len =36) %>% accuracy(visitors)#forecast total visitors arrival in NZ from 2016 to 2019. h denote the forecasting horizon of interest, groups denote the indices of eigenvectors of interes
 SSA<-ssa.forecast.train[,c("MAPE","MASE")]#print MAPE and MASE of ssa forecast
+
 
 
 fit.ssa.full<-ssa(visitors,L=76)#fit ssa on total visitors arrival original data set, 'L' is window size
